@@ -1,0 +1,8 @@
+integer = int(input("Enter an integer: "))
+Float = float(input("Enter a float number: "))
+String = input("Enter a string: ")
+
+print('The integer is', integer)
+print('The float is', Float)
+print('The string is', String)
+
