@@ -1,0 +1,11 @@
+sentence = input("Enter a sentence: ")
+words_list = sentence.split()
+print("\n--- List of Words ---")
+print(words_list)
+joined_sentence = ' - '.join(words_list)
+print("\n--- Joined Sentence ---")
+print(joined_sentence)
+name_tuple = ("Khan", "Sam")  # Replace with your actual first and last name
+print("\n--- Tuple Elements ---")
+print("First Name:", name_tuple[0])
+print("Last Name:", name_tuple[1])
