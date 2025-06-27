@@ -1,0 +1,48 @@
+# Student Record System
+
+# Tuple for storing student IDs
+student_ids = (101, 102, 103, 104, 105)
+
+# Set for storing unique course names
+courses = {"Python", "AI", "ML"}
+
+# Function to display student IDs
+def display_student_ids():
+    print("Student IDs (Tuple - Immutable):")
+    for sid in student_ids:
+        print("ID:", sid)
+
+# Function to display current courses
+def display_courses():
+    print("\nCurrent Course List:")
+    for course in courses:
+        print("-", course)
+
+# Function to add a new course
+def add_course(new_course):
+    # Sets handle duplicates automatically
+    courses.add(new_course)
+    print(f"Course '{new_course}' added.")
+
+# Function to remove a course
+def remove_course(course_name):
+    # Use discard to avoid error if course doesn't exist
+    if course_name in courses:
+        courses.remove(course_name)
+        print(f"Course '{course_name}' removed.")
+    else:
+        print(f"Course '{course_name}' not found in the list.")
+
+display_student_ids()
+display_courses()
+
+# Add new courses
+add_course("Data Science")
+add_course("Python")  # This won't add duplicate
+
+# Remove existing and non-existing courses
+remove_course("AI")
+remove_course("Cloud")  # This course doesn't exist
+
+# Display final course list
+display_courses()
