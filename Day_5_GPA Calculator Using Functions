@@ -1,0 +1,30 @@
+def calculate_gpa(grades, credit_hours=None):
+    if not grades:
+        return 0.0
+    if credit_hours is None:
+
+        # Equal credit hours: just take the average
+        gpa = sum(grades) / len(grades)
+    else:
+        # Weighted GPA
+        total_points = sum(g * c for g, c in zip(grades, credit_hours))
+        total_credits = sum(credit_hours)
+        gpa = total_points / total_credits
+    return round(gpa, 2)
+
+def display_gpa(name, gpa_value):
+    """
+    Prints GPA with formatting.
+    """
+    print(f"\nStudent: {name}")
+    print(f"Your GPA is: {gpa_value:.2f}")
+
+student_name = "Ali"
+grade_list = [3.5, 3.7, 4.0, 3.2]
+credit_list = [3, 3, 4, 2]  # optional
+
+# Using named arguments
+gpa = calculate_gpa(grades=grade_list, credit_hours=credit_list)
+
+# Display result
+display_gpa(name=student_name, gpa_value=gpa)
