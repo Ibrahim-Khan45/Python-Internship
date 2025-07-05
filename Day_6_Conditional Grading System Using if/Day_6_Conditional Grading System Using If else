@@ -1,0 +1,34 @@
+# Function to determine letter grade from numeric score
+def get_letter_grade(score):
+    if score < 0 or score > 100:
+        return "Invalid"
+    elif score >= 90:
+        return "A"
+    elif score >= 85:
+        return "A-"
+    elif score >= 80:
+        return "B+"
+    elif score >= 75:
+        return "B"
+    elif score >= 70:
+        return "B-"
+    elif score >= 65:
+        return "C+"
+    elif score >= 60:
+        return "C"
+    elif score >= 50:
+        return "D"
+    else:
+        return "F"
+
+# Function to print formatted grade summary
+def print_grade_summary(name, score):
+    grade = get_letter_grade(score)
+    if grade == "Invalid":
+        print(f"Error: {name} has an invalid score of {score}. Must be between 0–100.")
+    else:
+        print(f"Student {name} scored {score} → Grade: {grade}")
+# Example demonstration
+print_grade_summary(name="Zara", score=87.5)
+print_grade_summary(name="Ali", score=72)
+print_grade_summary(name="Hira", score=101)  # Invalid example
