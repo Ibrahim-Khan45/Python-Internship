@@ -1,0 +1,43 @@
+# Manually sort a list (Selection Sort)
+def manual_sort(lst):
+    for i in range(len(lst)):
+        for j in range(i + 1, len(lst)):
+            if lst[j] < lst[i]:
+                lst[i], lst[j] = lst[j], lst[i]
+    return lst
+
+# Calculate sum, average, min, and max without built-in functions
+def analyze_list(lst):
+    total = 0
+    smallest = lst[0]
+    largest = lst[0]
+
+    for num in lst:
+        total += num
+        if num < smallest:
+            smallest = num
+        if num > largest:
+            largest = num
+
+    average = total / len(lst)
+
+    return {
+        "Sorted": manual_sort(lst.copy()),
+        "Sum": total,
+        "Average": round(average, 2),
+        "Min": smallest,
+        "Max": largest
+    }
+
+# Print the results using enumerate
+def show_results(data):
+    print("\nAnalysis Result:")
+    for i, (key, value) in enumerate(data.items(), start=1):
+        print(f"{i}. {key}: {value}")
+
+# Take input and run the program
+raw = input("Enter numbers separated by commas: ")
+nums = [float(n.strip()) for n in raw.split(",") if n.strip()]
+
+result = analyze_list(nums)
+show_results(result)
