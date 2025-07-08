@@ -1,0 +1,96 @@
+import random
+
+def restock_item(item):
+    """Add random stock between 3 to 10 to item."""
+    item.quantity += random.randint(3, 10)
+from inventory_helpers import restock_item
+
+class Item:
+    """Represents a general inventory item."""
+
+    def _init_(self, name: str, price: float, quantity: int):
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+
+    def compute_total(self) -> float:
+        return self.price * self.quantity
+
+    def _str_(self) -> str:
+        return f"{self.name} → {self.quantity} pcs at Rs. {self.price:.2f} | Total: Rs. {self.compute_total():.2f}"
+
+
+class FreshItem(Item):
+    """Special type of item with expiry."""
+
+    def _init_(self, name: str, price: float, quantity: int, expiry_in_days: int):
+        super()._init_(name, price, quantity)
+        self.expiry = expiry_in_days
+
+    def compute_total(self) -> float:
+        total = super().compute_total()
+        if self.expiry < 5:
+            return total * 0.8  # Apply 20% discount
+        return total
+
+    def _str_(self) -> str:
+        return f"{super()._str_()} [Expires in {self.expiry} days]"
+
+
+class StockManager:
+    """Handles all inventory logic."""
+
+    def _init_(self):
+        self.items: list[Item] = []
+
+    def add_item(self, item: Item):
+        self.items.append(item)
+
+    def show_all(self):
+        print("\nInventory Overview:")
+        for idx, itm in enumerate(self.items, 1):
+            print(f"{idx}. {itm}")
+
+    def restock_everything(self):
+        for itm in self.items:
+            restock_item(itm)
+
+    def search(self, keyword: str):
+        print(f"\nSearching for: {keyword}")
+        matches = [itm for itm in self.items if keyword.lower() in itm.name.lower()]
+        if matches:
+            for m in matches:
+                print(m)
+        else:
+            print("No items matched your search.")
+
+    def export_summary(self, filename: str = "inventory_summary.txt"):
+        """Generate a file report."""
+        try:
+            with open(filename, 'w') as f:
+                f.write("Inventory Summary Report\n\n")
+                for i, itm in enumerate(self.items, 1):
+                    f.write(f"{i}. {itm.name} | Qty: {itm.quantity} | Value: Rs. {itm.compute_total():.2f}\n")
+            print(f"\nInventory report saved to: {filename}")
+        except Exception as e:
+            print(f"Error writing file: {e}")
+
+
+# Example usage
+if _name_ == "_main_":
+    manager = StockManager()
+
+    manager.add_item(Item("Notebook", 120, 30))
+    manager.add_item(FreshItem("Yogurt", 60, 10, 3))
+    manager.add_item(Item("Pen", 15, 50))
+    manager.add_item(FreshItem("Juice", 80, 20, 7))
+
+    manager.show_all()
+
+    manager.search("juice")
+
+    manager.restock_everything()
+    print("\nAfter restocking:")
+    manager.show_all()
+
+    manager.export_summary()
