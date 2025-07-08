@@ -1,0 +1,56 @@
+def read_marks_file(file_path):
+    student_marks = {}
+    skipped_entries = 0
+
+    try:
+        with open(file_path, 'r') as file:
+            for line_number, line in enumerate(file, start=1):
+                line = line.strip()
+
+                if not line:
+                    print(f"Line {line_number} skipped: Empty line.")
+                    skipped_entries += 1
+                    continue
+
+                try:
+                    name, mark = line.split(',')
+
+                    if not name or not mark:
+                        raise ValueError("Missing name or mark")
+
+                    mark = int(mark)
+                    student_marks[name.strip()] = mark
+
+                except ValueError as ve:
+                    print(f"Line {line_number} skipped: {ve}")
+                    skipped_entries += 1
+    except FileNotFoundError:
+        raise
+
+    return student_marks, skipped_entries
+
+
+def print_marks_summary(student_marks):
+    print("\nStudent Marks:")
+    try:
+        total = 0
+        for name, mark in student_marks.items():
+            print(f"{name}: {mark}")
+            total += mark
+
+        average = total / len(student_marks)
+        print(f"\nAverage Marks: {average:.2f}")
+    except ZeroDivisionError:
+        print("No valid student marks to display.")
+
+
+# Main Program Loop
+while True:
+    file_path = input("Enter the path to the marks file (e.g., marks.txt): ")
+    try:
+        marks_dict, skipped = read_marks_file(file_path)
+        print_marks_summary(marks_dict)
+        print(f"\n Skipped entries: {skipped}")
+        break
+    except FileNotFoundError:
+        print("File not found. Please try again.\n")
